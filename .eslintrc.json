@@ -1,0 +1,4 @@
+{
+  "extends": ["@bernankez/ts", "plugin:solid/typescript", "@bernankez/unocss"],
+  "plugins": ["solid"]
+}
