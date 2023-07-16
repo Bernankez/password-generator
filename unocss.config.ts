@@ -5,7 +5,7 @@ import type { UserConfig } from "unocss";
 
 export default defineConfig({
   presets: [presetUno(), presetDaisy({
-    themes: ["bumblebee", "cyberpunk", "valentine"],
+    themes: ["valentine", "bumblebee", "cyberpunk"],
   }), presetIcons()],
   transformers: [transformerDirectives()],
 });

@@ -15,7 +15,7 @@ import { Checkbox } from "@/components/checkbox";
 import { useI18n } from "@/locale";
 
 export function Home() {
-  const [t, { locale, setLocale }] = useI18n()!;
+  const [t, { locale }] = useI18n()!;
 
   const [password, setPassword] = createSignal("");
 
@@ -109,7 +109,7 @@ export function Home() {
 
   return (
     <div class="grid h-full min-h-full w-full items-center justify-items-center">
-      <div class="h-max w-max bg-base-200 shadow-xl card">
+      <div class="h-max w-max card">
         <div class="card-body">
           <h2 class="card-title">{t.title()}</h2>
           <form class="flex flex-col flex-gap-4">
