@@ -14,7 +14,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 render(
   () => (
-    <div>
+    <div class="grid h-full min-h-full w-full">
       <Home />
     </div>
   ),

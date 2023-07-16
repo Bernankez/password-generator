@@ -19,8 +19,12 @@
   },
   "dependencies": {
     "@unocss/reset": "^0.53.5",
+    "daisyui": "^3.2.1",
+    "js-sha512": "^0.8.0",
+    "password-quality-calculator": "^1.0.4",
     "solid-js": "^1.7.8",
     "unocss": "^0.53.5",
+    "unocss-preset-daisy": "^6.0.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
