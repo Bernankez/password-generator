@@ -77,14 +77,28 @@ export function Home() {
     } else {
       if (!formData.seed) {
         let err = "";
-        if (locale() === "en-US") {
+        const l = locale();
+        if (l === "en-US") {
           err = t.info.error("Seed is required when using a flag");
+        } else if (l === "zh-CN") {
+          err = t.info.error("使用`标志`时，`种子`是必填的");
+        } else if (l === "zh-TW") {
+          err = t.info.error("使用`標識`時，`種子碼`是必填的");
         }
         setError(err);
         return;
       }
       if (!formData.flag) {
-        setError(t.info.error("Flag is required when using a seed"));
+        let err = "";
+        const l = locale();
+        if (l === "en-US") {
+          err = t.info.error("Flag is required when using a seed");
+        } else if (l === "zh-CN") {
+          err = t.info.error("使用`种子`时，`标志`是必填的");
+        } else if (l === "zh-TW") {
+          err = t.info.error("使用`種子碼`時，`標識`是必填的");
+        }
+        setError(err);
         return;
       }
       const password = generateConstantPassword(formData.seed, formData.flag, {
