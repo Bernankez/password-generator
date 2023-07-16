@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@solid-primitives/i18n':
+    specifier: ^1.4.0
+    version: 1.4.0(solid-js@1.7.8)
   '@unocss/reset':
     specifier: ^0.53.5
     version: 0.53.5
@@ -1196,6 +1199,23 @@ packages:
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
+
+  /@solid-primitives/context@0.2.1(solid-js@1.7.8):
+    resolution: {integrity: sha512-XIIwCOWpRKDersgkR9LNFXaJHIV8QlCFo/tq5bV0cAOZklcwOFcqi2bN+uWgEIQSWGjWXU2kc1H1/TzgYzVDlg==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      solid-js: 1.7.8
+    dev: false
+
+  /@solid-primitives/i18n@1.4.0(solid-js@1.7.8):
+    resolution: {integrity: sha512-jKNa9cl9JFnJdYMh8cQUDb8n89Qc6UTJS9Q0DBjx04du86cv9OOCqnbc+xIKJy+QHV7MfBf7KFDdg3sSGwLstA==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      '@solid-primitives/context': 0.2.1(solid-js@1.7.8)
+      solid-js: 1.7.8
+    dev: false
 
   /@solidjs/router@0.8.2(solid-js@1.7.8):
     resolution: {integrity: sha512-gUKW+LZqxtX6y/Aw6JKyy4gQ9E7dLqp513oB9pSYJR1HM5c56Pf7eijzyXX+b3WuXig18Cxqah4tMtF0YGu80w==}

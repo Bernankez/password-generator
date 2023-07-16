@@ -12,9 +12,12 @@ import {
   passwordQuality,
 } from "@/utils";
 import { Checkbox } from "@/components/checkbox";
+import { useI18n } from "@/locale";
 
 export function Home() {
-  const [password, setPassword] = createSignal("fffff");
+  const [t, { locale, setLocale }] = useI18n()!;
+
+  const [password, setPassword] = createSignal("");
 
   const [error, setError] = createSignal("");
   const [copied, setCopied] = createSignal(false);
@@ -24,6 +27,7 @@ export function Home() {
   createEffect(() => {
     if (password()) {
       setQuality(passwordQuality(password()));
+      setCopied(false);
     }
   });
   const strength = createMemo(() => {
@@ -72,11 +76,15 @@ export function Home() {
       setPassword(password);
     } else {
       if (!formData.seed) {
-        setError("Seed is required when using a flag");
+        let err = "";
+        if (locale() === "en-US") {
+          err = t.info.error("Seed is required when using a flag");
+        }
+        setError(err);
         return;
       }
       if (!formData.flag) {
-        setError("Flag is required when using a seed");
+        setError(t.info.error("Flag is required when using a seed"));
         return;
       }
       const password = generateConstantPassword(formData.seed, formData.flag, {
@@ -88,7 +96,6 @@ export function Home() {
       });
       setPassword(password);
     }
-    setCopied(false);
     setError("");
   };
 
@@ -104,14 +111,14 @@ export function Home() {
     <div class="grid h-full min-h-full w-full items-center justify-items-center">
       <div class="h-max w-max bg-base-200 shadow-xl card">
         <div class="card-body">
-          <h2 class="card-title">Password Generator</h2>
+          <h2 class="card-title">{t.title()}</h2>
           <form class="flex flex-col flex-gap-4">
             <pre class="appearance-none rounded-full bg-neutral p-x-5 p-y-3 text-center text-5 text-white">
               {password()}
             </pre>
             <div class="flex items-center">
               <span class="w-23 shrink-0 cursor-default">
-                Length: {formData.length}
+                {t.form.length()}: {formData.length}
               </span>
               <input
                 value={formData.length}
@@ -127,30 +134,30 @@ export function Home() {
                 }
               />
             </div>
-            <div class="flex flex-wrap items-center flex-gap-5">
+            <div class="flex flex-wrap items-center justify-center flex-gap-5">
               <Checkbox
                 value={formData.numbers}
                 onValue={v => setFormData(s => (s.numbers = v))}
               >
-                Numbers
+                {t.form.number()}
               </Checkbox>
               <Checkbox
                 value={formData.uppercase}
                 onValue={v => setFormData(s => (s.uppercase = v))}
               >
-                Uppercase
+                {t.form.uppercase()}
               </Checkbox>
               <Checkbox
                 value={formData.lowercase}
                 onValue={v => setFormData(s => (s.lowercase = v))}
               >
-                Lowercase
+                {t.form.lowercase()}
               </Checkbox>
               <Checkbox
                 value={formData.symbols}
                 onValue={v => setFormData(s => (s.symbols = v))}
               >
-                Symbols
+                {t.form.symbols()}
               </Checkbox>
             </div>
             <div class="collapse">
@@ -160,7 +167,7 @@ export function Home() {
                 onInput={e => setCollapsed(e.currentTarget.checked)}
               />
               <div class="flex justify-between p-x-0 text-5 font-bold collapse-title">
-                <span>Optional</span>
+                <span>{t.form.optional()}</span>
                 <div
                   class={`i-ep:arrow-right-bold ${
                     collapsed() ? "rotate-90" : ""
@@ -169,10 +176,10 @@ export function Home() {
               </div>
               <div class="flex flex-col flex-gap-2 collapse-content">
                 <div>
-                  A mnemonic code
+                  {t.form.seedDesc()}
                   <div class="w-full join">
-                    <div class="rounded-l-full bg-accent p-x-5 font-medium text-accent-content label join-item">
-                      SEED
+                    <div class="w-fit shrink-0 rounded-l-full bg-accent p-x-5 font-medium text-accent-content label join-item">
+                      {t.form.seed()}
                     </div>
                     <input
                       class="w-full rounded-r-full input input-bordered join-item"
@@ -184,10 +191,10 @@ export function Home() {
                   </div>
                 </div>
                 <div>
-                  A distinguishing code, like `tiktok`
+                  {t.form.flagDesc()}
                   <div class="w-full join">
-                    <div class="rounded-l-full bg-accent p-x-5 font-medium label join-item">
-                      FLAG
+                    <div class="shrink-0 rounded-l-full bg-accent p-x-5 font-medium label join-item">
+                      {t.form.flag()}
                     </div>
                     <input
                       class="w-full rounded-r-full input input-bordered join-item"
@@ -211,6 +218,7 @@ export function Home() {
               value={quality() / 1.28}
               max="100"
             />
+            <div class="text-center">{t.strength[strength()]()}</div>
             <div class="flex justify-center">
               <button
                 class="btn btn-circle"
@@ -229,23 +237,23 @@ export function Home() {
                 copy();
               }}
             >
-              copy password
+              {t.copy()}
             </button>
             <Switch>
-              <Match when={!copied() && !error()}>
-                <div class="flex cursor-default justify-center alert alert-warning">
-                  <span>NOT COPIED</span>
-                </div>
-              </Match>
-              <Match when={!copied() && error()}>
+              <Match when={error()}>
                 <div class="flex cursor-default justify-center alert alert-error">
                   <span>{error()}</span>
+                </div>
+              </Match>
+              <Match when={!copied()}>
+                <div class="flex cursor-default justify-center alert alert-warning">
+                  <span class="uppercase">{t.info.notCopied()}</span>
                 </div>
               </Match>
               <Match when={copied()}>
                 <div class="flex cursor-default justify-center alert alert-success">
                   <div class="i-mdi:success" />
-                  <span>COPIED</span>
+                  <span class="uppercase">{t.info.copied()}</span>
                 </div>
               </Match>
             </Switch>
